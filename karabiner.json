@@ -1,0 +1,187 @@
+{
+    "global": {
+        "check_for_updates_on_startup": true,
+        "show_in_menu_bar": true,
+        "show_profile_name_in_menu_bar": false,
+        "unsafe_ui": false
+    },
+    "profiles": [
+        {
+            "complex_modifications": {
+                "parameters": {
+                    "basic.simultaneous_threshold_milliseconds": 50,
+                    "basic.to_delayed_action_delay_milliseconds": 500,
+                    "basic.to_if_alone_timeout_milliseconds": 1000,
+                    "basic.to_if_held_down_threshold_milliseconds": 500,
+                    "mouse_motion_to_scroll.speed": 100
+                },
+                "rules": [
+                    {
+                        "description": "§ to -",
+                        "manipulators": [ 
+                            {   "from": { "key_code": "6" }, 
+                                "to": [{ "key_code": "equal_sign" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },                    
+                    {
+                        "description": "caps_lock seul : esacpe, caps_lock + ijkl => arrow keys , caps_lock+ spacebar => _",
+                        "manipulators": [ 
+                            {
+                                "from": {  "key_code": "caps_lock",  "modifiers": {  "optional": [ "any" ]  }  },
+                                "to": [{"set_variable": { "name": "key1 pressed", "value": 1}}],
+                                "to_after_key_up": [ { "set_variable": { "name": "key1 pressed", "value": 0}}],
+                                "to_if_alone": [  {  "key_code": "escape"    }  ],                       
+                                "type": "basic"
+                            },                            
+                            {   "conditions": [ {"name": "key1 pressed", "type": "variable_if","value": 1}],
+                                "from": { "key_code": "i" ,  "modifiers": {  "optional": [ "any" ]  } },
+                                "to": [{"key_code": "up_arrow" } ],
+                                "type": "basic"
+                            },
+                            {   "conditions": [ {"name": "key1 pressed", "type": "variable_if","value": 1}],
+                                "from": { "key_code": "j" ,  "modifiers": {  "optional": [ "any" ]  } },
+                                "to": [{"key_code": "left_arrow" } ],
+                                "type": "basic"
+                            },
+                            {   "conditions": [ {"name": "key1 pressed", "type": "variable_if","value": 1}],
+                                "from": { "key_code": "k" ,  "modifiers": {  "optional": [ "any" ]  } },
+                                "to": [{"key_code": "down_arrow" } ],
+                                "type": "basic"
+                            },
+                            {   "conditions": [ {"name": "key1 pressed", "type": "variable_if","value": 1}],
+                                "from": { "key_code": "l" ,  "modifiers": {  "optional": [ "any" ]  } },
+                                "to": [{"key_code": "right_arrow" } ],
+                                "type": "basic"
+                            },
+                            {   "conditions": [ {"name": "key1 pressed", "type": "variable_if","value": 1}],
+                                "from": { "key_code": "spacebar" },
+                                "to": [{"key_code": "equal_sign" , "modifiers":["left_shift"]}  ],
+                                "type": "basic"
+                            }
+                        ]
+                    },        
+                    {
+                        "description": "caps lock replace shift or fn for some shortcuts",
+                        "manipulators": [
+                            {   "conditions": [ {"name": "key1 pressed", "type": "variable_if","value": 1}],
+                                "from": { "key_code": "slash"  },
+                                "to": [{"key_code": "slash" , "modifiers":["left_shift"]}  ],
+                                "type": "basic"
+                            },
+                            {   "conditions": [ {"name": "key1 pressed", "type": "variable_if","value": 1}],
+                                "from": { "key_code": "period" },
+                                "to": [{"key_code": "period" , "modifiers":["left_shift"]}  ],
+                                "type": "basic"
+                            },
+                            {   "conditions": [ {"name": "key1 pressed", "type": "variable_if","value": 1}],
+                                "from": { "key_code": "comma" },
+                                "to": [{"key_code": "comma" , "modifiers":["left_shift"]}  ],
+                                "type": "basic"
+                            },
+                            {   "conditions": [ {"name": "key1 pressed", "type": "variable_if","value": 1}],
+                                "from": { "key_code": "delete_or_backspace" },
+                                "to": [{"key_code": "delete_or_backspace" , "modifiers":["fn"]}  ],
+                                "type": "basic"
+                            }
+                        ]
+                    },            
+                    {
+                        "description": "Change tab + ru => ()",
+                        "manipulators": [
+                            {   "conditions": [ {"name": "key1 pressed", "type": "variable_if","value": 1}],
+                                "from": { "key_code": "r" },
+                                "to": [{"key_code": "5" } ],
+                                "type": "basic"
+                            },
+                            {   "conditions": [ {"name": "key1 pressed", "type": "variable_if","value": 1}],
+                                "from": { "key_code": "u" },
+                                "to": [{"key_code": "hyphen"} ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Change left_command + ru => []",
+                        "manipulators": [
+                            {   "from": { "key_code": "r",  "modifiers": { "mandatory": [ "left_command"  ] } },
+                                "to": [{"key_code": "5" , "modifiers":["left_shift", "left_option"]} ],
+                                "type": "basic"
+                            },
+                            {   "from": { "key_code": "u",  "modifiers": { "mandatory": [ "left_command" ] } },
+                                "to": [{"key_code": "hyphen" , "modifiers":["left_shift", "left_option"]} ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Change right_command + ru => {}",
+                        "manipulators": [
+                            {   "from": { "key_code": "r",  "modifiers": { "mandatory": [ "right_command"  ] } },
+                                "to": [{"key_code": "5" , "modifiers":["left_option"]} ],
+                                "type": "basic"
+                            },
+                            {   "from": { "key_code": "u",  "modifiers": { "mandatory": [ "right_command" ] } },
+                                "to": [{"key_code": "hyphen" , "modifiers":["left_option"]} ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "???",
+                        "manipulators": [
+                            {   "from": { "key_code": "m",  "modifiers": { "mandatory": [ "left_command"  ] } },
+                                "to": [{"key_code": "equal_sign" , "modifiers":["left_shift"]}  ],
+                                "type": "basic"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "devices": [
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "fn_function_keys": [],
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": false,
+                        "product_id": 641,
+                        "vendor_id": 1452
+                    },
+                    "ignore": false,
+                    "manipulate_caps_lock_led": true,
+                    "simple_modifications": [],
+                    "treat_as_built_in_keyboard": false
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "fn_function_keys": [],
+                    "identifiers": {
+                        "is_keyboard": false,
+                        "is_pointing_device": true,
+                        "product_id": 641,
+                        "vendor_id": 1452
+                    },
+                    "ignore": true,
+                    "manipulate_caps_lock_led": false,
+                    "simple_modifications": [],
+                    "treat_as_built_in_keyboard": false
+                }
+            ],
+            "fn_function_keys": [],
+            "name": "Default profile",
+            "parameters": {
+                "delay_milliseconds_before_open_device": 1000
+            },
+            "selected": true,
+            "simple_modifications": [
+            ],
+            "virtual_hid_keyboard": {
+                "country_code": 0,
+                "indicate_sticky_modifier_keys_state": true,
+                "mouse_key_xy_scale": 100
+            }
+        }
+    ]
+}
